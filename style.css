@@ -114,7 +114,32 @@
         0 20px 60px rgba(0, 84, 166, 0.25);
 
     }
+    .logo {
 
+      width: 120px;
+      height: 120px;
+
+      margin: auto;
+
+      border-radius: 35px;
+
+      background:
+        linear-gradient(135deg,
+          var(--blue),
+          var(--blue-light));
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      position: relative;
+
+      overflow: hidden;
+
+      box-shadow:
+        0 20px 60px rgba(0, 84, 166, 0.25);
+
+    }
     .logo::before {
 
       content: '';

@@ -1,228 +1,673 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="./style.css">
-     <!-- Google Font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>4C Construction</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
 
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap"
-    rel="stylesheet">
+        :root{
+            --accent:#F5A623;
+            --accent2:#FFD166;
+            --accent-dim:rgba(245,166,35,0.12);
+            --dark1:#0a0a0a;
+            --dark2:#141414;
+            --dark3:#1e1e1e;
+            --dark4:#2a2a2a;
+            --text1:#f0f0f0;
+            --text2:#888;
+            --glass:rgba(255,255,255,0.04);
+            --glass-border:rgba(255,255,255,0.06);
+        }
 
-  <!-- Font Awesome -->
-  <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+        html{scroll-behavior:smooth}
+
+        body{
+            font-family:'Tajawal',sans-serif;
+            background:var(--dark1);
+            color:var(--text1);
+            min-height:100vh;
+            overflow-x:hidden;
+            -webkit-font-smoothing:antialiased;
+        }
+
+        #bgCanvas{
+            position:fixed;
+            inset:0;
+            z-index:0;
+            pointer-events:none;
+        }
+
+        .top-glow{
+            position:fixed;
+            top:-200px;
+            left:50%;
+            transform:translateX(-50%);
+            width:600px;
+            height:500px;
+            background:radial-gradient(ellipse,rgba(245,166,35,0.10),transparent 70%);
+            z-index:0;
+            pointer-events:none;
+        }
+
+        .container{
+            position:relative;
+            z-index:1;
+            width:100%;
+            max-width:520px;
+            margin:0 auto;
+            padding:40px 18px 30px;
+        }
+
+        /* === HERO === */
+        .hero{
+            text-align:center;
+            margin-bottom:48px;
+            animation:fadeUp .8s ease both;
+        }
+
+        .logo-wrap{
+            position:relative;
+            display:inline-block;
+            margin-bottom:28px;
+        }
+
+        .logo-ring{
+            position:absolute;
+            inset:-8px;
+            border-radius:32px;
+            border:2px solid transparent;
+            background:linear-gradient(135deg,var(--accent),transparent 50%,var(--accent)) border-box;
+            -webkit-mask:linear-gradient(#fff 0 0) padding-box,linear-gradient(#fff 0 0);
+            -webkit-mask-composite:xor;
+            mask-composite:exclude;
+            animation:ringRotate 6s linear infinite;
+        }
+
+        @keyframes ringRotate{
+            0%{transform:rotate(0deg)}
+            100%{transform:rotate(360deg)}
+        }
+
+        .logo{
+            width:100px;
+            height:100px;
+            border-radius:26px;
+            background:linear-gradient(135deg,var(--accent),#d4891a);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            position:relative;
+            overflow:hidden;
+        }
+
+        .logo::after{
+            content:'';
+            position:absolute;
+            width:200%;
+            height:200%;
+            background:linear-gradient(45deg,transparent 40%,rgba(255,255,255,0.22) 50%,transparent 60%);
+            animation:shine 4s linear infinite;
+        }
+
+        .logo span{
+            position:relative;
+            z-index:2;
+            font-size:36px;
+            font-weight:900;
+            color:#fff;
+            letter-spacing:3px;
+            text-shadow:0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        @keyframes shine{
+            0%{left:-200%}
+            100%{left:200%}
+        }
+
+        .hero h1{
+            font-size:32px;
+            font-weight:900;
+            letter-spacing:0.5px;
+            line-height:1.4;
+        }
+
+        .hero h1 .highlight{
+            background:linear-gradient(90deg,var(--accent),var(--accent2));
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+            background-clip:text;
+        }
+
+        .hero-desc{
+            margin-top:14px;
+            font-size:14px;
+            color:var(--text2);
+            line-height:2;
+            font-weight:400;
+        }
+
+        .badge-row{
+            margin-top:22px;
+            display:flex;
+            justify-content:center;
+            gap:10px;
+            flex-wrap:wrap;
+        }
+
+        .badge{
+            display:inline-flex;
+            align-items:center;
+            gap:6px;
+            padding:8px 16px;
+            border-radius:100px;
+            background:var(--glass);
+            border:1px solid var(--glass-border);
+            font-size:12px;
+            font-weight:600;
+            color:var(--text2);
+            backdrop-filter:blur(10px);
+        }
+
+        .badge i{color:var(--accent);font-size:11px}
+
+        /* === DIVIDER === */
+        .divider{
+            height:1px;
+            background:linear-gradient(to left,transparent,var(--glass-border),transparent);
+            margin-bottom:32px;
+        }
+
+        /* === SOCIAL GRID === */
+        .social-grid{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:12px;
+        }
+
+        .social-card{
+            background:var(--glass);
+            border:1px solid var(--glass-border);
+            border-radius:20px;
+            padding:20px 16px;
+            text-decoration:none;
+            color:var(--text1);
+            transition:all .35s cubic-bezier(.25,.8,.25,1);
+            position:relative;
+            overflow:hidden;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            text-align:center;
+            gap:12px;
+            cursor:pointer;
+            opacity:0;
+            transform:translateY(24px);
+            animation:cardUp .5s ease forwards;
+            backdrop-filter:blur(8px);
+        }
+
+        .social-card:nth-child(1){animation-delay:.1s}
+        .social-card:nth-child(2){animation-delay:.15s}
+        .social-card:nth-child(3){animation-delay:.2s}
+        .social-card:nth-child(4){animation-delay:.25s}
+        .social-card:nth-child(5){animation-delay:.3s}
+        .social-card:nth-child(6){animation-delay:.35s}
+        .social-card:nth-child(7){animation-delay:.4s}
+        .social-card:nth-child(8){animation-delay:.45s}
+        .social-card:nth-child(9){animation-delay:.5s}
+
+        .social-card.whatsapp{
+            grid-column:1/-1;
+            flex-direction:row;
+            text-align:right;
+            padding:18px 22px;
+            border-color:rgba(37,211,102,0.15);
+            background:rgba(37,211,102,0.04);
+        }
+
+        .social-card.whatsapp .s-icon{width:50px;height:50px}
+
+        .social-card.whatsapp .s-text{
+            display:flex;
+            flex-direction:column;
+            align-items:flex-start;
+        }
+
+        .social-card.whatsapp .s-arrow{
+            margin-right:auto;
+            margin-left:0;
+        }
+
+        @keyframes cardUp{
+            to{opacity:1;transform:translateY(0)}
+        }
+
+        .social-card::before{
+            content:'';
+            position:absolute;
+            inset:0;
+            opacity:0;
+            transition:opacity .4s;
+            border-radius:20px;
+        }
+
+        .social-card:hover{
+            transform:translateY(-6px);
+            border-color:rgba(255,255,255,0.12);
+        }
+
+        .social-card:hover::before{opacity:1}
+        .social-card:active{transform:translateY(-2px) scale(.98)}
+
+        .website::before{background:radial-gradient(circle at 50% 0%,rgba(245,166,35,0.10),transparent 70%)}
+        .website:hover{border-color:rgba(245,166,35,0.25);box-shadow:0 12px 40px rgba(245,166,35,0.08)}
+
+        .snapchat::before{background:radial-gradient(circle at 50% 0%,rgba(255,252,0,0.08),transparent 70%)}
+        .snapchat:hover{border-color:rgba(255,252,0,0.2);box-shadow:0 12px 40px rgba(255,252,0,0.06)}
+
+        .linkedin::before{background:radial-gradient(circle at 50% 0%,rgba(0,119,181,0.10),transparent 70%)}
+        .linkedin:hover{border-color:rgba(0,119,181,0.25);box-shadow:0 12px 40px rgba(0,119,181,0.08)}
+
+        .tiktok::before{background:radial-gradient(circle at 50% 0%,rgba(105,201,208,0.08),transparent 70%)}
+        .tiktok:hover{border-color:rgba(105,201,208,0.2);box-shadow:0 12px 40px rgba(105,201,208,0.06)}
+
+        .x::before{background:radial-gradient(circle at 50% 0%,rgba(255,255,255,0.06),transparent 70%)}
+        .x:hover{border-color:rgba(255,255,255,0.15);box-shadow:0 12px 40px rgba(255,255,255,0.04)}
+
+        .instagram::before{background:radial-gradient(circle at 50% 0%,rgba(253,29,29,0.08),transparent 70%)}
+        .instagram:hover{border-color:rgba(253,29,29,0.2);box-shadow:0 12px 40px rgba(253,29,29,0.06)}
+
+        .whatsapp::before{background:radial-gradient(circle at 50% 0%,rgba(37,211,102,0.06),transparent 70%)}
+        .whatsapp:hover{border-color:rgba(37,211,102,0.3);box-shadow:0 12px 40px rgba(37,211,102,0.08)}
+
+        .youtube::before{background:radial-gradient(circle at 50% 0%,rgba(255,0,0,0.08),transparent 70%)}
+        .youtube:hover{border-color:rgba(255,0,0,0.2);box-shadow:0 12px 40px rgba(255,0,0,0.06)}
+
+        .facebook::before{background:radial-gradient(circle at 50% 0%,rgba(24,119,242,0.08),transparent 70%)}
+        .facebook:hover{border-color:rgba(24,119,242,0.2);box-shadow:0 12px 40px rgba(24,119,242,0.06)}
+
+        /* Icon */
+        .s-icon{
+            width:48px;
+            height:48px;
+            border-radius:14px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:22px;
+            color:#fff;
+            flex-shrink:0;
+            transition:transform .35s;
+        }
+
+        .social-card:hover .s-icon{transform:scale(1.1) rotate(-3deg)}
+
+        .website .s-icon{background:linear-gradient(135deg,#F5A623,#d4891a)}
+        .snapchat .s-icon{background:#FFFC00;color:#000}
+        .linkedin .s-icon{background:linear-gradient(135deg,#0077b5,#00a0dc)}
+        .tiktok .s-icon{background:linear-gradient(135deg,#111,#69C9D0)}
+        .x .s-icon{background:#fff;color:#000}
+        .instagram .s-icon{background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045)}
+        .whatsapp .s-icon{background:linear-gradient(135deg,#25D366,#128C7E)}
+        .youtube .s-icon{background:#FF0000}
+        .facebook .s-icon{background:linear-gradient(135deg,#1877F2,#0d5fd4)}
+
+        /* Text */
+        .s-text{
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            gap:3px;
+            min-width:0;
+        }
+
+        .s-name{
+            font-size:14px;
+            font-weight:800;
+            white-space:nowrap;
+            overflow:hidden;
+            text-overflow:ellipsis;
+            max-width:100%;
+        }
+
+        .s-handle{
+            font-size:11px;
+            color:var(--text2);
+            font-weight:400;
+        }
+
+        /* Arrow */
+        .s-arrow{
+            width:30px;
+            height:30px;
+            border-radius:50%;
+            background:rgba(255,255,255,0.06);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:11px;
+            color:var(--text2);
+            transition:all .35s;
+            flex-shrink:0;
+        }
+
+        .social-card:hover .s-arrow{
+            background:var(--accent);
+            color:#000;
+            transform:translateX(-3px);
+        }
+
+        /* === FOOTER === */
+        .footer{
+            text-align:center;
+            margin-top:40px;
+            padding-top:24px;
+            border-top:1px solid var(--glass-border);
+            animation:fadeUp .8s ease .6s both;
+        }
+
+        .footer p{
+            font-size:12px;
+            color:var(--text2);
+            font-weight:400;
+        }
+
+        .footer .brand{
+            color:var(--accent);
+            font-weight:800;
+        }
+
+        @keyframes fadeUp{
+            from{opacity:0;transform:translateY(20px)}
+            to{opacity:1;transform:translateY(0)}
+        }
+
+        /* === RESPONSIVE === */
+        @media(max-width:360px){
+            .container{padding:28px 12px 20px}
+            .logo-wrap{margin-bottom:20px}
+            .logo{width:80px;height:80px;border-radius:22px}
+            .logo span{font-size:28px;letter-spacing:2px}
+            .logo-ring{inset:-6px;border-radius:26px}
+            .hero h1{font-size:26px}
+            .hero-desc{font-size:13px}
+            .social-grid{gap:8px}
+            .social-card{padding:16px 12px;border-radius:16px;gap:10px}
+            .s-icon{width:40px;height:40px;border-radius:12px;font-size:18px}
+            .s-name{font-size:13px}
+            .s-handle{font-size:10px}
+            .s-arrow{width:26px;height:26px;font-size:10px}
+            .badge{padding:6px 12px;font-size:11px}
+            .social-card.whatsapp{padding:14px 16px}
+            .social-card.whatsapp .s-icon{width:42px;height:42px}
+        }
+
+        @media(min-width:361px) and (max-width:440px){
+            .container{padding:32px 14px 24px}
+            .logo{width:88px;height:88px;border-radius:24px}
+            .logo span{font-size:32px}
+            .hero h1{font-size:28px}
+            .social-grid{gap:10px}
+            .social-card{padding:18px 14px;border-radius:18px}
+            .s-icon{width:44px;height:44px;font-size:20px}
+        }
+
+        @media(min-width:441px) and (max-width:560px){
+            .container{padding:36px 18px 28px}
+            .hero h1{font-size:30px}
+            .social-card{padding:20px 16px}
+            .s-icon{width:48px;height:48px}
+        }
+
+        @media(min-width:561px){
+            .container{padding:48px 24px 36px}
+            .hero h1{font-size:34px}
+            .social-grid{gap:14px}
+            .social-card{padding:24px 20px}
+            .s-icon{width:52px;height:52px;border-radius:16px;font-size:24px}
+            .s-name{font-size:15px}
+        }
+
+        @media(max-height:520px) and (orientation:landscape){
+            .container{padding:14px 18px 10px}
+            .hero{margin-bottom:20px}
+            .logo-wrap{margin-bottom:12px}
+            .logo{width:60px;height:60px;border-radius:16px}
+            .logo span{font-size:22px;letter-spacing:1px}
+            .logo-ring{inset:-4px;border-radius:19px}
+            .hero h1{font-size:20px;margin-bottom:4px}
+            .hero-desc{font-size:11px;margin-top:6px;line-height:1.6}
+            .badge-row{margin-top:10px;gap:6px}
+            .badge{padding:4px 10px;font-size:10px}
+            .divider{margin-bottom:14px}
+            .social-grid{gap:8px}
+            .social-card{padding:10px 10px;border-radius:14px;gap:8px}
+            .s-icon{width:34px;height:34px;border-radius:10px;font-size:15px}
+            .s-name{font-size:12px}
+            .s-handle{font-size:9px}
+            .s-arrow{width:24px;height:24px;font-size:9px}
+            .social-card.whatsapp{padding:10px 14px}
+            .social-card.whatsapp .s-icon{width:34px;height:34px}
+            .footer{margin-top:16px;padding-top:14px}
+        }
+
+        @media(max-height:400px) and (orientation:landscape){
+            .badge-row{display:none}
+            .hero-desc{display:none}
+            .hero{margin-bottom:12px}
+        }
+
+        @media(min-width:768px) and (orientation:landscape){
+            .container{max-width:700px}
+            .social-grid{grid-template-columns:repeat(3,1fr)}
+            .social-card.whatsapp{grid-column:span 1;flex-direction:column;text-align:center}
+            .social-card.whatsapp .s-text{align-items:center}
+            .social-card.whatsapp .s-arrow{margin:0}
+        }
+    </style>
 </head>
 <body>
-      <div class="container">
 
-    <!-- HERO -->
+<canvas id="bgCanvas"></canvas>
+<div class="top-glow"></div>
+
+<div class="container">
 
     <div class="hero">
+        <div class="logo-wrap">
+            <div class="logo-ring"></div>
+            <div class="logo">
+                <span>4C</span>
+            </div>
+        </div>
 
-      <div class="logo">
-        <span>4C</span>
-      </div>
+        <h1><span class="highlight">4C Construction</span></h1>
 
-      <h1 class="company-name">
-        4C Decoration
-      </h1>
+        <p class="hero-desc">
+            أعمال البناء والتشطيبات والديكورات الحديثة
+            <br>
+            حلول هندسية متكاملة بجودة احترافية
+        </p>
 
-      <p class="company-desc">
-        تشطيبات وديكورات وارضيات إيبوكسي وتيرازو
-        <br>
-        حلول احترافية للواجهات والديكورات الحديثة
-      </p>
-
-      <div class="saudi-badge">
-        🇸🇦 المملكة العربية السعودية
-      </div>
-
+        <div class="badge-row">
+            <span class="badge"><i class="fas fa-map-marker-alt"></i> السعودية</span>
+            <span class="badge"><i class="fas fa-hard-hat"></i> بناء وتشطيب</span>
+            <span class="badge"><i class="fas fa-star"></i> جودة عالية</span>
+        </div>
     </div>
 
-    <!-- SOCIAL LINKS -->
+    <div class="divider"></div>
 
-    <div class="social-links">
+    <div class="social-grid">
 
+        <a href="https://4c-construction.vercel.app/" class="social-card website">
+            <div class="s-icon"><i class="fa-solid fa-house"></i></div>
+            <div class="s-text">
+                <span class="s-name">الموقع الرسمي</span>
+                <span class="s-handle">4c-construction</span>
+            </div>
+            <div class="s-arrow"><i class="fas fa-arrow-left"></i></div>
+        </a>
 
-            <a href="https://4c-decoration.vercel.app/#home" class="social-card instagram">
+        <a href="https://www.snapchat.com/add/construction234?share_id=8UE7WtQSJ34&locale=ar-AE" class="social-card snapchat">
+            <div class="s-icon"><i class="fab fa-snapchat-ghost"></i></div>
+            <div class="s-text">
+                <span class="s-name">سناب شات</span>
+                <span class="s-handle">@construction234</span>
+            </div>
+            <div class="s-arrow"><i class="fas fa-arrow-left"></i></div>
+        </a>
 
-        <div class="icon">
-<i class="fa-solid fa-house"></i>
-        </div>
+        <a href="https://www.linkedin.com/in/4c-construction-27a09b40a" target="_blank" class="social-card linkedin">
+            <div class="s-icon"><i class="fab fa-linkedin-in"></i></div>
+            <div class="s-text">
+                <span class="s-name">لينكد إن</span>
+                <span class="s-handle">4C Construction</span>
+            </div>
+            <div class="s-arrow"><i class="fas fa-arrow-left"></i></div>
+        </a>
 
-        <div class="social-info">
-          <div class="social-title"> 4C Decoration</div>
-          <div class="social-sub">@4c.decoration</div>
-        </div>
+        <a href="https://tiktok.com/@4cconstruction" class="social-card tiktok">
+            <div class="s-icon"><i class="fab fa-tiktok"></i></div>
+            <div class="s-text">
+                <span class="s-name">تيك توك</span>
+                <span class="s-handle">@4cconstruction</span>
+            </div>
+            <div class="s-arrow"><i class="fas fa-arrow-left"></i></div>
+        </a>
 
-        <div class="arrow">
-          <i class="fas fa-arrow-left"></i>
-        </div>
+        <a href="https://x.com/4CConstruction0" class="social-card x">
+            <div class="s-icon"><i class="fab fa-x-twitter"></i></div>
+            <div class="s-text">
+                <span class="s-name">تويتر / X</span>
+                <span class="s-handle">@4CConstruction0</span>
+            </div>
+            <div class="s-arrow"><i class="fas fa-arrow-left"></i></div>
+        </a>
 
-      </a>
+        <a href="https://www.instagram.com/4c_construction/?igsh=ZGJmcjd6MmEzdGNk" class="social-card instagram">
+            <div class="s-icon"><i class="fab fa-instagram"></i></div>
+            <div class="s-text">
+                <span class="s-name">إنستقرام</span>
+                <span class="s-handle">@4c_construction</span>
+            </div>
+            <div class="s-arrow"><i class="fas fa-arrow-left"></i></div>
+        </a>
 
+        <a href="https://youtube.com/@4c-construction?si=3qb9L__0q74aS4Xy" class="social-card youtube">
+            <div class="s-icon"><i class="fab fa-youtube"></i></div>
+            <div class="s-text">
+                <span class="s-name">يوتيوب</span>
+                <span class="s-handle">@4c-construction</span>
+            </div>
+            <div class="s-arrow"><i class="fas fa-arrow-left"></i></div>
+        </a>
 
+        <a href="https://www.facebook.com/share/1HhxyVTaZ5/" class="social-card facebook">
+            <div class="s-icon"><i class="fab fa-facebook-f"></i></div>
+            <div class="s-text">
+                <span class="s-name">فيسبوك</span>
+                <span class="s-handle">4C Construction</span>
+            </div>
+            <div class="s-arrow"><i class="fas fa-arrow-left"></i></div>
+        </a>
 
-      <!-- SNAPCHAT -->
-
-      <a href="https://www.snapchat.com/add/decoration20026" class="social-card snapchat">
-
-        <div class="icon">
-          <i class="fab fa-snapchat-ghost"></i>
-        </div>
-
-        <div class="social-info">
-          <div class="social-title">سناب شات</div>
-          <div class="social-sub">@4c.decoration</div>
-        </div>
-
-        <div class="arrow">
-          <i class="fas fa-arrow-left"></i>
-        </div>
-
-      </a>
-
-      <a href="https://www.linkedin.com/in/4c-decoration-27a09b40a" target="_blank" class="social-card linkedin">
-
-  <div class="icon">
-    <i class="fab fa-linkedin-in"></i>
-  </div>
-
-  <div class="social-info">
-    <div class="social-title">لينكد إن</div>
-    <div class="social-sub">4C Decoration</div>
-  </div>
-
-  <div class="arrow">
-    <i class="fas fa-arrow-left"></i>
-  </div>
-
-</a>
-
-      <!-- TIKTOK -->
-
-      <a href="https://www.tiktok.com/@4c.decoration" class="social-card tiktok">
-
-        <div class="icon">
-          <i class="fab fa-tiktok"></i>
-        </div>
-
-        <div class="social-info">
-          <div class="social-title">تيك توك</div>
-          <div class="social-sub">@4c.decoration</div>
-        </div>
-
-        <div class="arrow">
-          <i class="fas fa-arrow-left"></i>
-        </div>
-
-      </a>
-
-      <!-- X -->
-
-      <a href="https://x.com/4CDecortion" class="social-card x">
-
-        <div class="icon">
-          <i class="fab fa-x-twitter"></i>
-        </div>
-
-        <div class="social-info">
-          <div class="social-title">تويتر / X</div>
-          <div class="social-sub">@4c_decoration</div>
-        </div>
-
-        <div class="arrow">
-          <i class="fas fa-arrow-left"></i>
-        </div>
-
-      </a>
-
-            <a href="https://www.instagram.com/4cdecoration" class="social-card instagram">
-
-        <div class="icon">
-          <i class="fab fa-instagram"></i>
-        </div>
-
-        <div class="social-info">
-          <div class="social-title">إنستقرام</div>
-          <div class="social-sub">@4c.decoration</div>
-        </div>
-
-        <div class="arrow">
-          <i class="fas fa-arrow-left"></i>
-        </div>
-
-      </a>
-      <!-- WHATSAPP -->
-
-      <a href="https://wa.me/966563589858" class="social-card whatsapp">
-
-        <div class="icon">
-          <i class="fab fa-whatsapp"></i>
-        </div>
-
-        <div class="social-info">
-          <div class="social-title">واتساب</div>
-          <div class="social-sub">تواصل معنا مباشرة</div>
-        </div>
-
-        <div class="arrow">
-          <i class="fas fa-arrow-left"></i>
-        </div>
-
-      </a>
-
-      <!-- YOUTUBE -->
-
-      <a href="https://youtube.com/@4cdecoration-e7k" class="social-card youtube">
-
-        <div class="icon">
-          <i class="fab fa-youtube"></i>
-        </div>
-
-        <div class="social-info">
-          <div class="social-title">يوتيوب</div>
-          <div class="social-sub">@4cdecoration</div>
-        </div>
-
-        <div class="arrow">
-          <i class="fas fa-arrow-left"></i>
-        </div>
-
-      </a>
-
-      <!-- FACEBOOK -->
-
-      <a href="https://www.facebook.com/share/16iZQPdhg2/" class="social-card facebook">
-
-        <div class="icon">
-          <i class="fab fa-facebook-f"></i>
-        </div>
-
-        <div class="social-info">
-          <div class="social-title">فيسبوك</div>
-          <div class="social-sub">4C Decoration</div>
-        </div>
-
-        <div class="arrow">
-          <i class="fas fa-arrow-left"></i>
-        </div>
-
-      </a>
+        <a href="https://wa.me/966563589858" class="social-card whatsapp">
+            <div class="s-icon"><i class="fab fa-whatsapp"></i></div>
+            <div class="s-text">
+                <span class="s-name">تواصل عبر واتساب</span>
+                <span class="s-handle">راسلنا الآن مباشرة</span>
+            </div>
+            <div class="s-arrow"><i class="fas fa-arrow-left"></i></div>
+        </a>
 
     </div>
-
-    <!-- FOOTER -->
 
     <div class="footer">
-      <span>4C Decoration</span>
-      جميع الحقوق محفوظة © 2026
+        <p><span class="brand">4C Construction</span> — جميع الحقوق محفوظة © 2026</p>
     </div>
 
-  </div>
+</div>
+
+<script>
+const canvas = document.getElementById('bgCanvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+let w, h;
+
+function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+}
+
+function createParticles() {
+    particles = [];
+    const count = Math.min(Math.floor((w * h) / 18000), 60);
+    for (let i = 0; i < count; i++) {
+        particles.push({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            r: Math.random() * 1.5 + 0.5,
+            dx: (Math.random() - 0.5) * 0.3,
+            dy: (Math.random() - 0.5) * 0.3,
+            o: Math.random() * 0.3 + 0.05
+        });
+    }
+}
+
+function draw() {
+    ctx.clearRect(0, 0, w, h);
+    for (const p of particles) {
+        p.x += p.dx;
+        p.y += p.dy;
+        if (p.x < 0) p.x = w;
+        if (p.x > w) p.x = 0;
+        if (p.y < 0) p.y = h;
+        if (p.y > h) p.y = 0;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(245,166,35,${p.o})`;
+        ctx.fill();
+    }
+    for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 120) {
+                ctx.beginPath();
+                ctx.moveTo(particles[i].x, particles[i].y);
+                ctx.lineTo(particles[j].x, particles[j].y);
+                ctx.strokeStyle = `rgba(245,166,35,${0.03 * (1 - dist / 120)})`;
+                ctx.lineWidth = 0.5;
+                ctx.stroke();
+            }
+        }
+    }
+    requestAnimationFrame(draw);
+}
+
+const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+resize();
+createParticles();
+if (!prefersReduced) draw();
+else {
+    ctx.clearRect(0, 0, w, h);
+    for (const p of particles) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(245,166,35,${p.o})`;
+        ctx.fill();
+    }
+}
+window.addEventListener('resize', () => { resize(); createParticles(); });
+</script>
+
 </body>
 </html>
